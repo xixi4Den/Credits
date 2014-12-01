@@ -1,8 +1,18 @@
-﻿@model AvDB_lab4.Models.ApplicationViewModel
+﻿@using AvDB_lab4.Entities.Clients
+@model AvDB_lab4.Models.CreditApplicationViewModel
 
 @{
     ViewBag.Title = "Create";
 }
+
+<script>
+    $(function () {
+        $('#ClientGroupViewModel_SelectedClientGroup').change(function () {
+            location.href = "/Application/Create?clientGroupId=" + $(this).val();
+        });
+    });
+</script>
+
 
 <h2>Create</h2>
 
@@ -12,50 +22,101 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>ApplicationViewModel</h4>
+        <h4>Application</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.RegisterDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RegisterDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RegisterDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CompleteDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ClientGroupViewModel, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CompleteDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CompleteDate, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.ClientGroupViewModel, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ClientGroupViewModel, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        
         <div class="form-group">
-            @Html.LabelFor(model => model.ClientId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.CreditCategoryViewModel, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ClientId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.CreditCategoryViewModel, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CreditCategoryViewModel, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreditCategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreditCategoryId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreditCategoryId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsCompleted, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsCompleted)
-                    @Html.ValidationMessageFor(model => model.IsCompleted, "", new { @class = "text-danger" })
+        
+        @Html.HiddenFor(x => x.ClientId)
+        @if (Model.ClientGroupViewModel.SelectedClientGroup == ClientGroup.PrivatePerson)
+        {
+            <div class="form-group">
+                @Html.Label("Person", htmlAttributes: new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    <input type="text" name="client" id="person_autocomplete" class="form-control" />
                 </div>
             </div>
-        </div>
+
+            <script>
+            $(document).ready(function () {
+                var persons = new Bloodhound({
+                    datumTokenizer: function (d) {
+                        return Bloodhound.tokenizers.whitespace(d.Id);
+                    },
+                    queryTokenizer: function (d) {
+                        return Bloodhound.tokenizers.whitespace(d.FullName);
+                    },
+                    remote: '/Clients/LegalPersonAutocomplete?query=%QUERY'
+                });
+
+                persons.initialize();
+
+                $("#person_autocomplete").typeahead(
+                {
+                    highlight: true,
+                },
+                {
+                    name: 'persons',
+                    displayKey: 'FullName',
+                    source: persons.ttAdapter(),
+                }).on('typeahead:selected', function (event, data) {
+                    $('#ClientId').val(data.Id);
+                });
+            });
+            </script>
+        }
+        else
+        {
+            <div class="form-group">
+                @Html.Label("Company", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" name="client" id="company_autocomplete" class="form-control typeahead" />
+                </div>
+            </div>
+            
+            <script>
+            $(document).ready(function () {
+                var companies = new Bloodhound({
+                    datumTokenizer: function (d) {
+                        return Bloodhound.tokenizers.whitespace(d.Id);
+                    },
+                    queryTokenizer: function (d) {
+                        return Bloodhound.tokenizers.whitespace(d.Name);
+                    },
+                    remote: '/Clients/JuridicalPersonAutocomplete?query=%QUERY'
+                });
+
+                companies.initialize();
+
+                $("#company_autocomplete").typeahead(
+                {
+                    highlight: true,
+                },
+                {
+                    name: 'companies',
+                    displayKey: 'Name',
+                    source: companies.ttAdapter(),
+                }).on('typeahead:selected', function (event, data) {
+                    $('#ClientId').val(data.Id);
+                });
+            });
+            </script>
+        }
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -72,3 +133,5 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+

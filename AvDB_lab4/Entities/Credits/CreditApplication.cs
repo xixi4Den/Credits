@@ -8,7 +8,7 @@ namespace AvDB_lab4.Entities.Credits
         public DateTime RegisterDate { get; set; }
         public DateTime? CompleteDate { get; set; }
         public Guid ClientId { get; set; }
-        public BaseClient Client { get; set; }
+        public virtual BaseClient Client { get; set; }
         public Guid CreditCategoryId { get; set; }
         public virtual CreditCategory CreditCategory { get; set; }
         public bool IsCompleted { get; set; }

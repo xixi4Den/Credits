@@ -12,7 +12,7 @@ namespace AvDB_lab4.DataAccess.Framework
 
         IEnumerable<T> Get(
             Expression<Func<T, bool>> filter,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             params string[] includeProperties);
 
         void InsertOrUpdate(T entity);

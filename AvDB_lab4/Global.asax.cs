@@ -15,6 +15,7 @@ namespace AvDB_lab4
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             DependencyResolver.SetResolver(new NinjectDependencyResolver());
+            AutoMapperConfig.RegisterMappings();
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using AvDB_lab4.Entities;
 using AvDB_lab4.Entities.Clients;
+using AvDB_lab4.Entities.Credits;
 
 namespace AvDB_lab4.DataAccess.Framework
 {
@@ -18,6 +19,9 @@ namespace AvDB_lab4.DataAccess.Framework
             repositories = new Dictionary<Type, object>();
             isDisposed = false;
             RegisterRepository(new CommonRepository<JuridicalPerson>(context));
+            RegisterRepository(new CommonRepository<LegalPerson>(context));
+            RegisterRepository(new CommonRepository<CreditCategory>(context));
+            RegisterRepository(new CommonRepository<CreditApplication>(context));
         }
 
         protected ApplicationDbContext Context

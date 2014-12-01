@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
+    @Scripts.Render("~/bundles/jquery")
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -23,7 +24,7 @@
                     @if (Request.IsAuthenticated && User.IsInRole("Operator"))
                     {
                         <li>
-                            @Html.ActionLink("Add Application", "Test", "Test")
+                            @Html.ActionLink("Add Application", "Create", "Application", new { clientGroupId = 0 }, null);
                         </li>
                     }
                 </ul>
@@ -39,7 +40,7 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
+    
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

@@ -42,9 +42,10 @@ namespace AvDB_lab4.DataAccess.Framework
 
         public void InsertOrUpdate(T entity)
         {
-            var updatedEntity = context.Entry(entity);
-            if (updatedEntity == null)
+            
+            if (entity.Id == Guid.Empty)
             {
+                entity.Id = Guid.NewGuid();
                 context.Set<T>().Add(entity);
             }
             else
