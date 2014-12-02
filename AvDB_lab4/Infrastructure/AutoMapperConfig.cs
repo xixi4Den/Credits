@@ -10,7 +10,7 @@ namespace AvDB_lab4.Infrastructure
             AutoMapper.Mapper.CreateMap<CreditApplicationViewModel, CreditApplication>()
                 .ForMember(dest => dest.CreditCategoryId,
                     opts => opts.MapFrom(src => src.CreditCategoryViewModel.SelectedCreditCategoryId));
-
+            AutoMapper.Mapper.CreateMap<CreditApplication, ApplicationDetailsViewModel>();
         }
     }
 }

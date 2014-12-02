@@ -3,6 +3,8 @@ using AvDB_lab4.Business.Credits.Interfaces;
 using AvDB_lab4.Entities.Clients;
 using AvDB_lab4.Models;
 using WebGrease;
+using AvDB_lab4.DataAccess.Framework;
+using AvDB_lab4.Entities.Credits;
 
 namespace AvDB_lab4.Controllers
 {
@@ -15,9 +17,10 @@ namespace AvDB_lab4.Controllers
             this.creditApplicationManager = creditApplicationManager;
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Details(System.Guid id)
         {
-            return View();
+            var applicationDetailsViewModel = creditApplicationManager.GetApplicationDetailsViewModel(id);
+            return View(applicationDetailsViewModel);
         }
 
         public ActionResult Create(int clientGroupId)

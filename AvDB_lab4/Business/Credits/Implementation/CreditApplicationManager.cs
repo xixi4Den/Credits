@@ -63,5 +63,20 @@ namespace AvDB_lab4.Business.Credits.Implementation
             unitOfWork.GetRepository<CreditApplication>().InsertOrUpdate(entity);
             unitOfWork.Commit();
         }
+
+        public ApplicationDetailsViewModel GetApplicationDetailsViewModel(Guid id)
+        {
+            var creditApplication = unitOfWork.GetRepository<CreditApplication>().GetById(id);
+            ApplicationDetailsViewModel applicationDetailsModel = new ApplicationDetailsViewModel();
+            if (creditApplication.Client.ClientGroup == ClientGroup.PrivatePerson)
+            {
+                LegalPerson client = unitOfWork.GetRepository<LegalPerson>().GetById(creditApplication.ClientId);
+                applicationDetailsModel.ClientName = client.FirstName + " " + client.LastName;
+            }
+            else
+                applicationDetailsModel.ClientName = unitOfWork.GetRepository<JuridicalPerson>().GetById(creditApplication.ClientId).Name;
+            AutoMapper.Mapper.Map(creditApplication, applicationDetailsModel);
+            return applicationDetailsModel;
+        }
     }
 }
