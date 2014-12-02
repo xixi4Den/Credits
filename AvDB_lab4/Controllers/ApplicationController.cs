@@ -1,8 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using AvDB_lab4.Business.Credits.Interfaces;
 using AvDB_lab4.Entities.Clients;
 using AvDB_lab4.Models;
-using WebGrease;
 
 namespace AvDB_lab4.Controllers
 {
@@ -17,6 +17,7 @@ namespace AvDB_lab4.Controllers
 
         public ActionResult Details(int id)
         {
+
             return View();
         }
 
@@ -28,16 +29,20 @@ namespace AvDB_lab4.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [HandleError]
         public ActionResult Create([Bind(Include = "ClientGroupViewModel,CreditCategoryViewModel,ClientId")] CreditApplicationViewModel viewModel)
         {
             try
             {
-                creditApplicationManager.SaveNewCreditApplication(viewModel);
-                return RedirectToAction("Index", "WorkQueue");
+                if (creditApplicationManager.SaveNewCreditApplication(viewModel))
+                {
+                    return RedirectToAction("Index", "WorkQueue");
+                }
+                throw new Exception();
             }
             catch
             {
-                return View();
+                throw new ApplicationException("Application cannot be created. Please contact your system administrator.");
             }
         }
     }

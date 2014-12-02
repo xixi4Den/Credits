@@ -20,5 +20,7 @@ namespace AvDB_lab4.DataAccess.Framework
         void Delete(T entity);
 
         void Delete(Guid id);
+
+        int Count(Expression<Func<T, bool>> filter);
     }
 }

@@ -45,9 +45,9 @@ namespace AvDB_lab4.Migrations
             //context.Set<Currency>().Add(currency);
             //context.SaveChanges();
 
-            //const string defaultRole = "Operator";
-            //const string defaultUser = "TestUser1";
-            //const string defaultPassword = "123456";
+            //const string defaultRole = "AuthorizedParty";
+            //const string defaultUser = "TestUser5";
+            //const string defaultPassword = "123456qW1";
 
             //if (!context.Roles.Any(r => r.Name == defaultRole))
             //{
@@ -66,10 +66,10 @@ namespace AvDB_lab4.Migrations
             //}
             //else
             //{
-            //var user = context.Users.Single(u => u.UserName.Equals(defaultUser, StringComparison.CurrentCultureIgnoreCase));
-            //var store = new UserStore<ApplicationUser>(context);
-            //var manager = new UserManager<ApplicationUser>(store);
-            //manager.AddToRole(user.Id, defaultRole);
+            //    var user = context.Users.Single(u => u.UserName.Equals(defaultUser, StringComparison.CurrentCultureIgnoreCase));
+            //    var store = new UserStore<ApplicationUser>(context);
+            //    var manager = new UserManager<ApplicationUser>(store);
+            //    manager.AddToRole(user.Id, defaultRole);
             //}
         }
     }

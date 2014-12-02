@@ -64,5 +64,15 @@ namespace AvDB_lab4.DataAccess.Framework
             T entity = GetById(id);
             Delete(entity);
         }
+
+        public int Count(Expression<Func<T, bool>> filter)
+        {
+            IQueryable<T> query = context.Set<T>();
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            return query.Count();
+        }
     }
 }

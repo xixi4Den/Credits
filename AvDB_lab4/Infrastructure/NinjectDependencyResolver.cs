@@ -5,6 +5,8 @@ using AvDB_lab4.Business.Clients.Implementation;
 using AvDB_lab4.Business.Clients.Interfaces;
 using AvDB_lab4.Business.Credits.Implementation;
 using AvDB_lab4.Business.Credits.Interfaces;
+using AvDB_lab4.Business.Credits.Tasks.Implementation;
+using AvDB_lab4.Business.Credits.Tasks.Interfaces;
 using AvDB_lab4.DataAccess.Framework;
 using Ninject;
 
@@ -32,6 +34,7 @@ namespace AvDB_lab4.Infrastructure
             kernel.Bind<ICreditCategoryManager>().To<CreditCategoryManager>();
             kernel.Bind<ICreditApplicationManager>().To<CreditApplicationManager>();
             kernel.Bind<IClientManager>().To<ClientManager>();
+            kernel.Bind<ITaskManager>().To<TaskManager>();
         }
     }
 

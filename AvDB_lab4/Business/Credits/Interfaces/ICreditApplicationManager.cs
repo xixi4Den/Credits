@@ -6,6 +6,6 @@ namespace AvDB_lab4.Business.Credits.Interfaces
     public interface ICreditApplicationManager
     {
         CreditApplicationViewModel GetNewCreditApplicationViewModel(ClientGroup clientGroup);
-        void SaveNewCreditApplication(CreditApplicationViewModel viewModel);
+        bool SaveNewCreditApplication(CreditApplicationViewModel viewModel);
     }
 }

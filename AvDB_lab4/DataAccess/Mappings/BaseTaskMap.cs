@@ -12,7 +12,7 @@ namespace AvDB_lab4.DataAccess.Mappings
             HasKey(x => x.Id);
 
             Property(x => x.Id).IsRequired();
-            Property(x => x.UserId).IsRequired();
+            Property(x => x.UserId).IsOptional();
             Property(x => x.CreditApplicationId).IsRequired();
             Property(x => x.DispalyText).IsRequired();
             Property(x => x.Status).IsRequired();
@@ -20,7 +20,7 @@ namespace AvDB_lab4.DataAccess.Mappings
             Property(x => x.CompleteDate).IsOptional();
 
             HasRequired(x => x.CreditApplication).WithMany().HasForeignKey(x => x.CreditApplicationId);
-            HasRequired(x => x.User).WithMany().HasForeignKey(x => x.UserId);
+            HasOptional(x => x.User).WithMany().HasForeignKey(x => x.UserId);
         }
     }
 }
