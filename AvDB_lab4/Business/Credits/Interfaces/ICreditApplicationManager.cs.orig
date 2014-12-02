@@ -6,7 +6,11 @@ namespace AvDB_lab4.Business.Credits.Interfaces
     public interface ICreditApplicationManager
     {
         CreditApplicationViewModel GetNewCreditApplicationViewModel(ClientGroup clientGroup);
+<<<<<<< HEAD
         bool SaveNewCreditApplication(CreditApplicationViewModel viewModel);
+=======
+        void SaveNewCreditApplication(CreditApplicationViewModel viewModel);
         ApplicationDetailsViewModel GetApplicationDetailsViewModel(System.Guid id);
+>>>>>>> 7546303183129dc084b4106468784eb251cfbb5a
     }
 }

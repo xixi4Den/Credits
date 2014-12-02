@@ -91,6 +91,9 @@ namespace AvDB_lab4.Business.Credits.Implementation
             viewModel.RejectionReason = null;
         }
 
+<<<<<<< HEAD
+
+=======
         public ApplicationDetailsViewModel GetApplicationDetailsViewModel(Guid id)
         {
             var creditApplication = unitOfWork.GetRepository<CreditApplication>().GetById(id);
@@ -105,5 +108,6 @@ namespace AvDB_lab4.Business.Credits.Implementation
             AutoMapper.Mapper.Map(creditApplication, applicationDetailsModel);
             return applicationDetailsModel;
         }
+>>>>>>> 7546303183129dc084b4106468784eb251cfbb5a
     }
 }
