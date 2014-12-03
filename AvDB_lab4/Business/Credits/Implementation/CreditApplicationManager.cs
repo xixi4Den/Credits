@@ -68,7 +68,7 @@ namespace AvDB_lab4.Business.Credits.Implementation
             unitOfWork.GetRepository<CreditApplication>().InsertOrUpdate(entity);
             unitOfWork.Commit();
 
-            taskManager.CreateTaskForNewCreditApplication(entity);
+            taskManager.CreateTasksForNewCreditApplication(entity);
 
             return true;
         }
@@ -101,7 +101,10 @@ namespace AvDB_lab4.Business.Credits.Implementation
                 applicationDetailsModel.ClientName = client.FirstName + " " + client.LastName;
             }
             else
+            {
                 applicationDetailsModel.ClientName = unitOfWork.GetRepository<JuridicalPerson>().GetById(creditApplication.ClientId).Name;
+            }
+                
             AutoMapper.Mapper.Map(creditApplication, applicationDetailsModel);
             return applicationDetailsModel;
         }

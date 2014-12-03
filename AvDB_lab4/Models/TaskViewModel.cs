@@ -22,5 +22,7 @@ namespace AvDB_lab4.Models
         [Display(Name = "Assigned to")]
         [DisplayFormat(NullDisplayText = "-")]
         public string AssignedTo { get; set; }
+        public Guid ClientId { get; set; }
+        public string UserId { get; set; }
     }
 }

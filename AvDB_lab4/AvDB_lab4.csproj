@@ -245,6 +245,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDetailsViewModel.cs" />
+    <Compile Include="Models\ApprovalTaskViewModel.cs" />
     <Compile Include="Models\ClientGroupViewModel.cs" />
     <Compile Include="Models\CompanyAutocompleteModel.cs" />
     <Compile Include="Models\CreditApplicationViewModel.cs" />
@@ -303,6 +304,7 @@
     <Content Include="Views\Shared\EditorTemplates\ClientGroupViewModel.cshtml" />
     <Content Include="Views\Application\Details.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ApplicationDetailsViewModel.cshtml" />
+    <Content Include="Views\WorkQueue\TaskDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -56,7 +56,7 @@
             @Html.DisplayFor(modelItem => item.AssignedTo)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { Id = item.Id })
+            @Html.ActionLink("Details", "TaskDetails", new { taskId = item.Id })
         </td>
     </tr>
 }

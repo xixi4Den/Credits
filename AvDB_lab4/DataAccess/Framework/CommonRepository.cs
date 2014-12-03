@@ -51,6 +51,7 @@ namespace AvDB_lab4.DataAccess.Framework
             else
             {
                 context.Set<T>().Attach(entity);
+                context.Entry(entity).State = EntityState.Modified;
             }
         }
 

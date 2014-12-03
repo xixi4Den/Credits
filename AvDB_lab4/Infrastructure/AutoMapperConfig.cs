@@ -14,7 +14,9 @@ namespace AvDB_lab4.Infrastructure
             AutoMapper.Mapper.CreateMap<CreditApplication, ApplicationDetailsViewModel>();
             AutoMapper.Mapper.CreateMap<BaseTask, TaskViewModel>()
                 .ForMember(dest => dest.CreditCategoryName,
-                    opts => opts.MapFrom(src => src.CreditApplication.CreditCategory.Name));
+                    opts => opts.MapFrom(src => src.CreditApplication.CreditCategory.Name))
+                .ForMember(dest => dest.ClientId,
+                    opts => opts.MapFrom(src => src.CreditApplication.ClientId));
         }
     }
 }
