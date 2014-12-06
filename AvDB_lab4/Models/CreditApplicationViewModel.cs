@@ -6,6 +6,7 @@ namespace AvDB_lab4.Models
 {
     public class CreditApplicationViewModel
     {
+        public Guid Id { get; set; }
         public DateTime RegisterDate { get; set; }
         public DateTime? CompleteDate { get; set; }
         public Guid ClientId { get; set; }
