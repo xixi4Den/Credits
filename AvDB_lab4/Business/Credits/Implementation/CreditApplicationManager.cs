@@ -5,6 +5,7 @@ using AvDB_lab4.DataAccess.Framework;
 using AvDB_lab4.Entities.Clients;
 using AvDB_lab4.Entities.Credits;
 using AvDB_lab4.Models;
+using System.Collections.Generic;
 
 namespace AvDB_lab4.Business.Credits.Implementation
 {
@@ -94,6 +95,22 @@ namespace AvDB_lab4.Business.Credits.Implementation
         public ApplicationDetailsViewModel GetApplicationDetailsViewModel(Guid id)
         {
             var creditApplication = unitOfWork.GetRepository<CreditApplication>().GetById(id);
+            return GetApplicationDetails(creditApplication);
+        }
+
+        public List<ApplicationDetailsViewModel> GetApplicationListViewModel()
+        {
+            List<ApplicationDetailsViewModel> resultList = new List<ApplicationDetailsViewModel>();
+            var creditApplicationList = unitOfWork.GetRepository<CreditApplication>().Get(x => true);
+            foreach (var application in creditApplicationList)
+            {
+                resultList.Add(GetApplicationDetails(application));
+            }
+            return resultList;
+        }
+
+        private ApplicationDetailsViewModel GetApplicationDetails(CreditApplication creditApplication)
+        {
             ApplicationDetailsViewModel applicationDetailsModel = new ApplicationDetailsViewModel();
             if (creditApplication.Client.ClientGroup == ClientGroup.PrivatePerson)
             {
@@ -104,7 +121,7 @@ namespace AvDB_lab4.Business.Credits.Implementation
             {
                 applicationDetailsModel.ClientName = unitOfWork.GetRepository<JuridicalPerson>().GetById(creditApplication.ClientId).Name;
             }
-                
+
             AutoMapper.Mapper.Map(creditApplication, applicationDetailsModel);
             return applicationDetailsModel;
         }

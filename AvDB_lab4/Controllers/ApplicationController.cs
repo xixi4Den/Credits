@@ -47,5 +47,10 @@ namespace AvDB_lab4.Controllers
                 throw new ApplicationException("Application cannot be created. Please contact your system administrator.");
             }
         }
+
+        public ActionResult ApplicationList()
+        {
+            return View(creditApplicationManager.GetApplicationListViewModel());
+        }
     }
 }
