@@ -37,9 +37,11 @@ namespace AvDB_lab4.Controllers
         public ActionResult AssignToMe(Guid taskId)
         {
             var userId = User.Identity.GetUserId();
+            ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var userRoles = userManager.GetRoles(userId);
             try
             {
-                taskManager.AssignTaskToUser(taskId, userId);
+                taskManager.AssignTaskToUser(taskId, userId, userRoles);
             }
             catch (BusinessException e)
             {

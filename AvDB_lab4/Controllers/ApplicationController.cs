@@ -35,11 +35,14 @@ namespace AvDB_lab4.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [HandleError]
         public ActionResult Create([Bind(Include = "ClientGroupViewModel,CreditCategoryViewModel,ClientId")] CreditApplicationViewModel viewModel)
         {
             try
             {
+                if (!Request.IsAuthenticated || !User.IsInRole("Operator"))
+                {
+                    throw new BusinessException("You don't have permissions for this operation");
+                }
                 creditApplicationManager.SaveNewCreditApplication(viewModel);
                 return RedirectToAction("List", "Application");
             }

@@ -11,7 +11,7 @@ namespace AvDB_lab4.Business.Credits.Tasks.Interfaces
         IEnumerable<TaskViewModel> GetTaskViewModelsByRoles(IList<string> roles);
         TaskViewModel GetTaskViewModelByTaskId(Guid id);
         ApprovalTaskViewModel GetApprovalTaskViewModelByTaskId(Guid id);
-        void AssignTaskToUser(Guid taskId, string userId);
+        void AssignTaskToUser(Guid taskId, string userId, IList<string> userRoles);
         void CompleteApprovalTask(ApprovalTaskViewModel viewModel);
     }
 }

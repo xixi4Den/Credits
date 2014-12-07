@@ -185,6 +185,7 @@
     <Compile Include="Business\Credits\Tasks\Interfaces\ITaskManager.cs" />
     <Compile Include="Business\Exceptions\BusinessException.cs" />
     <Compile Include="Business\TaskNames.cs" />
+    <Compile Include="Business\TaskTypeRolesMapping.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />

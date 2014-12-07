@@ -13,15 +13,6 @@ namespace AvDB_lab4.Business.Credits.Tasks.Implementation.CompleteTaskProcessors
     {
         protected readonly IUnitOfWork unitOfWork;
 
-        private readonly IDictionary<ApprovalType, string> ApprovalTypeRolesMapping = new Dictionary
-            <ApprovalType, string>
-        {
-            {ApprovalType.CreditCommittee, "CreditCommitteeEmployee"},
-            {ApprovalType.RiskManagment, "RiskManager"},
-            {ApprovalType.SecurityService, "SecurityManager"},
-            {ApprovalType.Fianl, "AuthorizedParty"},
-        };
-
         public BaseCompleteTaskProcessor(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
@@ -59,7 +50,7 @@ namespace AvDB_lab4.Business.Credits.Tasks.Implementation.CompleteTaskProcessors
 
         private void CheckPermissions(CompletionTaskContext context)
         {
-            var expectedRole = ApprovalTypeRolesMapping[context.TaskForComplete.ApprovalType];
+            var expectedRole = TaskTypeRolesMapping.Values[context.TaskForComplete.ApprovalType];
             if (!context.ViewModel.UserRoles.Contains(expectedRole))
             {
                 throw new BusinessException("You don't have permissions for this operation");

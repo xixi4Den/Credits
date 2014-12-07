@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web;
 using AutoMapper;
 using AvDB_lab4.Business.Credits.Tasks.Context;
 using AvDB_lab4.Business.Credits.Tasks.Interfaces;
@@ -11,6 +12,7 @@ using AvDB_lab4.Entities.Credits;
 using AvDB_lab4.Entities.Credits.Tasks;
 using AvDB_lab4.Entities.Credits.Tasks.Approvals;
 using AvDB_lab4.Models;
+using Microsoft.AspNet.Identity;
 
 namespace AvDB_lab4.Business.Credits.Tasks.Implementation
 {
@@ -68,16 +70,25 @@ namespace AvDB_lab4.Business.Credits.Tasks.Implementation
             return viewModel;
         }
 
-        public void AssignTaskToUser(Guid taskId, string userId)
+        public void AssignTaskToUser(Guid taskId, string userId, IList<string> userRoles)
         {
-            var task = unitOfWork.GetRepository<BaseTask>().GetById(taskId);
+            var task = unitOfWork.GetRepository<ApprovalTask>().GetById(taskId);
+            var expectedRole = TaskTypeRolesMapping.Values[task.ApprovalType];
+            if (!userRoles.Contains(expectedRole))
+            {
+                throw new BusinessException("You don't have permissions for this operation");
+            }
             if (task.UserId != null)
             {
                 throw new BusinessException("This task is already assigned to other user");
             }
+            if (task.Status != TaskStatus.New)
+            {
+                throw new BusinessException("This task don't have new status");
+            }
             task.UserId = userId;
             task.Status = TaskStatus.InProgress;
-            unitOfWork.GetRepository<BaseTask>().InsertOrUpdate(task);
+            unitOfWork.GetRepository<ApprovalTask>().InsertOrUpdate(task);
             unitOfWork.Commit();
         }
 
