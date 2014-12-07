@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using AvDB_lab4.Business.Credits.Tasks.Context;
 using AvDB_lab4.Business.Credits.Tasks.Interfaces;
+using AvDB_lab4.Business.Exceptions;
 using AvDB_lab4.DataAccess.Framework;
 using AvDB_lab4.Entities.Credits.Tasks;
 using AvDB_lab4.Entities.Credits.Tasks.Approvals;
@@ -56,32 +57,29 @@ namespace AvDB_lab4.Business.Credits.Tasks.Implementation.CompleteTaskProcessors
             AfterComplete(context);
         }
 
-        private bool CheckPermissions(CompletionTaskContext context)
+        private void CheckPermissions(CompletionTaskContext context)
         {
             var expectedRole = ApprovalTypeRolesMapping[context.TaskForComplete.ApprovalType];
-            if (context.ViewModel.UserRoles.Contains(expectedRole))
+            if (!context.ViewModel.UserRoles.Contains(expectedRole))
             {
-                return true;
+                throw new BusinessException("You don't have permissions for this operation");
             }
-            return false;
         }
 
-        private bool CheckAssignment(CompletionTaskContext context)
+        private void CheckAssignment(CompletionTaskContext context)
         {
-            if (context.TaskForComplete.UserId == context.ViewModel.UserId)
+            if (context.TaskForComplete.UserId != context.ViewModel.UserId)
             {
-                return true;
+                throw new BusinessException("This task is not completed to you");
             }
-            return false;
         }
 
-        private bool CheckCompletion(CompletionTaskContext context)
+        private void CheckCompletion(CompletionTaskContext context)
         {
-            if (context.TaskForComplete.Status != TaskStatus.Completed)
+            if (context.TaskForComplete.Status == TaskStatus.Completed)
             {
-                return true;
+                throw new BusinessException("This task is already completed");
             }
-            return false;
         }
     }
 }

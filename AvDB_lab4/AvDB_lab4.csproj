@@ -183,6 +183,7 @@
     <Compile Include="Business\Credits\Tasks\Interfaces\ICompleteTaskProcessor.cs" />
     <Compile Include="Business\Credits\Tasks\Interfaces\ICompleteTaskProcessorResolver.cs" />
     <Compile Include="Business\Credits\Tasks\Interfaces\ITaskManager.cs" />
+    <Compile Include="Business\Exceptions\BusinessException.cs" />
     <Compile Include="Business\TaskNames.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />

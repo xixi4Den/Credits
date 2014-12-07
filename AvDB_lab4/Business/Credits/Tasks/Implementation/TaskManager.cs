@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using AvDB_lab4.Business.Credits.Tasks.Context;
 using AvDB_lab4.Business.Credits.Tasks.Interfaces;
+using AvDB_lab4.Business.Exceptions;
 using AvDB_lab4.DataAccess;
 using AvDB_lab4.DataAccess.Framework;
 using AvDB_lab4.Entities.Clients;
@@ -72,7 +73,7 @@ namespace AvDB_lab4.Business.Credits.Tasks.Implementation
             var task = unitOfWork.GetRepository<BaseTask>().GetById(taskId);
             if (task.UserId != null)
             {
-                throw new InvalidOperationException(); //trow BusinessException
+                throw new BusinessException("This task is already assigned to other user");
             }
             task.UserId = userId;
             task.Status = TaskStatus.InProgress;

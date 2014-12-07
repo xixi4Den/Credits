@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.Web.UI.WebControls;
 using AvDB_lab4.Business.Credits.Tasks.Context;
+using AvDB_lab4.Business.Exceptions;
 using AvDB_lab4.DataAccess.Framework;
 using AvDB_lab4.Entities.Credits;
 using AvDB_lab4.Entities.Credits.Tasks;
@@ -89,13 +91,12 @@ namespace AvDB_lab4.Business.Credits.Tasks.Implementation.CompleteTaskProcessors
             return false;
         }
 
-        private bool IsApplicationRejected(CompletionTaskContext context)
+        private void IsApplicationRejected(CompletionTaskContext context)
         {
-            if (!context.TaskForComplete.CreditApplication.IsCompleted)
+            if (context.TaskForComplete.CreditApplication.IsCompleted)
             {
-                return false;
+                throw new BusinessException("This credit application has been completed");
             }
-            return true;
         }
     }
 }

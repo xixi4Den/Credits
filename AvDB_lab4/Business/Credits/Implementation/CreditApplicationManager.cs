@@ -1,6 +1,7 @@
 ﻿using System;
 using AvDB_lab4.Business.Credits.Interfaces;
 using AvDB_lab4.Business.Credits.Tasks.Interfaces;
+using AvDB_lab4.Business.Exceptions;
 using AvDB_lab4.DataAccess.Framework;
 using AvDB_lab4.Entities.Clients;
 using AvDB_lab4.Entities.Credits;
@@ -50,7 +51,7 @@ namespace AvDB_lab4.Business.Credits.Implementation
             return result;
         }
 
-        public bool SaveNewCreditApplication(CreditApplicationViewModel viewModel)
+        public void SaveNewCreditApplication(CreditApplicationViewModel viewModel)
         {
             Contract.NotNull(viewModel, "CreditApplicationViewModel cannot be null");
             Contract.NotNull(viewModel.ClientGroupViewModel, "ClientGroupViewModel cannot be null");
@@ -60,7 +61,7 @@ namespace AvDB_lab4.Business.Credits.Implementation
 
             if (IsCreditApplicationAlreadyExistsForClient(viewModel.ClientId))
             {
-                return false;
+                throw new BusinessException("Application for this client already exists");
             }
 
             FillCreditApplicationViewModel(viewModel);
@@ -70,13 +71,11 @@ namespace AvDB_lab4.Business.Credits.Implementation
             unitOfWork.Commit();
 
             taskManager.CreateTasksForNewCreditApplication(entity);
-
-            return true;
         }
 
         private bool IsCreditApplicationAlreadyExistsForClient(Guid clientId)
         {
-            if (unitOfWork.GetRepository<CreditApplication>().Count(x => x.ClientId == clientId) > 0)
+            if (unitOfWork.GetRepository<CreditApplication>().Count(x => x.ClientId == clientId && !x.IsCompleted) > 0)
             {
                 return true;
             }

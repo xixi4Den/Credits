@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Web.Mvc;
+using System.Web.Routing;
 using AvDB_lab4.Business.Credits.Interfaces;
+using AvDB_lab4.Business.Exceptions;
 using AvDB_lab4.Entities.Clients;
 using AvDB_lab4.Models;
 using AvDB_lab4.DataAccess.Framework;
@@ -19,12 +21,14 @@ namespace AvDB_lab4.Controllers
 
         public ActionResult Details(System.Guid id)
         {
+            ViewBag.ErrorMessage = TempData["ErrorMessage"] != null ? TempData["ErrorMessage"].ToString() : null;
             var applicationDetailsViewModel = creditApplicationManager.GetApplicationDetailsViewModel(id);
             return View(applicationDetailsViewModel);
         }
 
         public ActionResult Create(int clientGroupId)
         {
+            ViewBag.ErrorMessage = TempData["ErrorMessage"] != null ? TempData["ErrorMessage"].ToString() : null;
             var viewModel = creditApplicationManager.GetNewCreditApplicationViewModel((ClientGroup)clientGroupId);
             return View(viewModel);
         }
@@ -36,20 +40,20 @@ namespace AvDB_lab4.Controllers
         {
             try
             {
-                if (creditApplicationManager.SaveNewCreditApplication(viewModel))
-                {
-                    return RedirectToAction("Index", "WorkQueue");
-                }
-                throw new Exception();
+                creditApplicationManager.SaveNewCreditApplication(viewModel);
+                return RedirectToAction("List", "Application");
             }
-            catch
+            catch(BusinessException e)
             {
-                throw new ApplicationException("Application cannot be created. Please contact your system administrator.");
+                TempData["ErrorMessage"] = e.Message;
+                return RedirectToAction("Create", "Application",
+                    new {clientGroupId = (int)viewModel.ClientGroupViewModel.SelectedClientGroup});
             }
         }
 
         public ActionResult List()
         {
+            ViewBag.ErrorMessage = TempData["ErrorMessage"] != null ? TempData["ErrorMessage"].ToString() : null;
             return View(creditApplicationManager.GetApplicationListViewModel());
         }
     }

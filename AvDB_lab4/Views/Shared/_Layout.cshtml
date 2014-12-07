@@ -28,6 +28,14 @@
         </div>
     </div>
     <div class="container body-content">
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <strong>Error!</strong> @ViewBag.ErrorMessage
+                <strong>Please contact your system administrator</strong>
+            </div>
+        }
         @RenderBody()
         <hr />
         <footer>

@@ -2,6 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 using AvDB_lab4.Business.Credits.Tasks.Interfaces;
+using AvDB_lab4.Business.Exceptions;
 using AvDB_lab4.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -19,18 +20,16 @@ namespace AvDB_lab4.Controllers
 
         public ActionResult Index()
         {
-            if (Request.IsAuthenticated)
-            {
-                ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                var roles = userManager.GetRoles(User.Identity.GetUserId());
-                var viewModel = taskManager.GetTaskViewModelsByRoles(roles);
-                return View(viewModel);
-            }
-            throw new ApplicationException("You are not authenticated or have not ");
+            ViewBag.ErrorMessage = TempData["ErrorMessage"] != null ? TempData["ErrorMessage"].ToString() : null;
+            ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var roles = userManager.GetRoles(User.Identity.GetUserId());
+            var viewModel = taskManager.GetTaskViewModelsByRoles(roles);
+            return View(viewModel);
         }
 
         public ActionResult TaskDetails(Guid taskId)
         {
+            ViewBag.ErrorMessage = TempData["ErrorMessage"] != null ? TempData["ErrorMessage"].ToString() : null;
             var viewModel = taskManager.GetTaskViewModelByTaskId(taskId);
             return View(viewModel);
         }
@@ -38,13 +37,21 @@ namespace AvDB_lab4.Controllers
         public ActionResult AssignToMe(Guid taskId)
         {
             var userId = User.Identity.GetUserId();
-            taskManager.AssignTaskToUser(taskId, userId);
+            try
+            {
+                taskManager.AssignTaskToUser(taskId, userId);
+            }
+            catch (BusinessException e)
+            {
+                TempData["ErrorMessage"] = e.Message;
+                return RedirectToAction("TaskDetails", new { taskId = taskId });
+            }
             return RedirectToAction("TaskDetails", new { taskId = taskId });
         }
 
         public ActionResult Work(Guid id)
         {
-            //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);    HttpNotFound();
+            ViewBag.ErrorMessage = TempData["ErrorMessage"] != null ? TempData["ErrorMessage"].ToString() : null;
             var viewModel = taskManager.GetApprovalTaskViewModelByTaskId(id);
             return View(viewModel);
         }
@@ -58,7 +65,15 @@ namespace AvDB_lab4.Controllers
                 ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 viewModel.UserRoles = userManager.GetRoles(User.Identity.GetUserId());
                 viewModel.UserId = User.Identity.GetUserId();
-                taskManager.CompleteApprovalTask(viewModel);
+                try
+                {
+                    taskManager.CompleteApprovalTask(viewModel);
+                }
+                catch (BusinessException e)
+                {
+                    TempData["ErrorMessage"] = e.Message;
+                    return RedirectToAction("Work", new { id = viewModel.Id });
+                }
             }
             return RedirectToAction("Index");
         }
