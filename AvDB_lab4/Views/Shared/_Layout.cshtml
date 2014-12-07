@@ -21,12 +21,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Work Queue", "Index", "WorkQueue")</li>
-                    @if (Request.IsAuthenticated && User.IsInRole("Operator"))
-                    {
-                        <li>
-                            @Html.ActionLink("Add Application", "Create", "Application", new { clientGroupId = 0 }, null);
-                        </li>
-                    }
+                    <li>@Html.ActionLink("Applications", "List", "Application")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

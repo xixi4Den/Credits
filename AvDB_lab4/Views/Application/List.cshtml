@@ -10,13 +10,16 @@
 @model IEnumerable<AvDB_lab4.Models.ApplicationDetailsViewModel>
 
 @{
-    ViewBag.Title = "Application List";
+    ViewBag.Title = "Applications";
 }
 
-<h2>ApplicationListView</h2>
+<h2>Applications</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create", "Application")
+    @if (Request.IsAuthenticated && User.IsInRole("Operator"))
+    {
+            @Html.ActionLink("Add Application", "Create", "Application", new { clientGroupId = 0 }, new {@class = "btn btn-info"})
+    }
 </p>
 <table id="applicationListTable" class="table table-striped">
     <thead>

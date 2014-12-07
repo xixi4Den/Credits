@@ -48,7 +48,7 @@ namespace AvDB_lab4.Controllers
             }
         }
 
-        public ActionResult ApplicationList()
+        public ActionResult List()
         {
             return View(creditApplicationManager.GetApplicationListViewModel());
         }

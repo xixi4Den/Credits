@@ -1,4 +1,5 @@
-﻿@model AvDB_lab4.Models.TaskViewModel
+﻿@using AvDB_lab4.Entities.Credits.Tasks
+@model AvDB_lab4.Models.TaskViewModel
 
 @{
     ViewBag.Title = "Task Details";
@@ -9,6 +10,13 @@
 @Html.DisplayForModel()
 
 <p>
-    @Html.ActionLink("Back to List", "Index")
-    @Html.ActionLink("Assign To Me", "AssignToMe", new { taskId = Model.Id })
+    @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-info"})
+    @if (Model.AssignedTo == null)
+    {
+        @Html.ActionLink("Assign To Me", "AssignToMe", new {taskId = Model.Id}, new {@class = "btn btn-primary"})
+    }
+    else if(Model.Status != TaskStatus.Completed)
+    {
+        @Html.ActionLink("Work", "Work", new { id = Model.Id }, new { @class = "btn btn-primary" })
+    }  
 </p>
