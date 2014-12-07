@@ -2,6 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 using AvDB_lab4.Business.Credits.Tasks.Interfaces;
+using AvDB_lab4.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
@@ -39,6 +40,27 @@ namespace AvDB_lab4.Controllers
             var userId = User.Identity.GetUserId();
             taskManager.AssignTaskToUser(taskId, userId);
             return RedirectToAction("TaskDetails", new { taskId = taskId });
+        }
+
+        public ActionResult Work(Guid id)
+        {
+            //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);    HttpNotFound();
+            var viewModel = taskManager.GetApprovalTaskViewModelByTaskId(id);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Work([Bind(Include = "Id, OutcomeViewModel, RejectionReasonViewModel")] ApprovalTaskViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                viewModel.UserRoles = userManager.GetRoles(User.Identity.GetUserId());
+                viewModel.UserId = User.Identity.GetUserId();
+                taskManager.CompleteApprovalTask(viewModel);
+            }
+            return RedirectToAction("Index");
         }
     }
 }

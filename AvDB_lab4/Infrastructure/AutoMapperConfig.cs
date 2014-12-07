@@ -1,5 +1,6 @@
 ﻿using AvDB_lab4.Entities.Credits;
 using AvDB_lab4.Entities.Credits.Tasks;
+using AvDB_lab4.Entities.Credits.Tasks.Approvals;
 using AvDB_lab4.Models;
 
 namespace AvDB_lab4.Infrastructure
@@ -17,6 +18,7 @@ namespace AvDB_lab4.Infrastructure
                     opts => opts.MapFrom(src => src.CreditApplication.CreditCategory.Name))
                 .ForMember(dest => dest.ClientId,
                     opts => opts.MapFrom(src => src.CreditApplication.ClientId));
+            AutoMapper.Mapper.CreateMap<ApprovalTask, ApprovalTaskViewModel>();
         }
     }
 }

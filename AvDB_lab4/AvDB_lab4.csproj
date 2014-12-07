@@ -174,7 +174,14 @@
     <Compile Include="Business\Credits\Implementation\CreditCategoryManager.cs" />
     <Compile Include="Business\Credits\Interfaces\ICreditApplicationManager.cs" />
     <Compile Include="Business\Credits\Interfaces\ICreditCategoryManager.cs" />
+    <Compile Include="Business\Credits\Tasks\Context\CompletionTaskContext.cs" />
+    <Compile Include="Business\Credits\Tasks\Implementation\CompleteTaskProcessorResolver.cs" />
+    <Compile Include="Business\Credits\Tasks\Implementation\CompleteTaskProcessors\BaseCompleteTaskProcessor.cs" />
+    <Compile Include="Business\Credits\Tasks\Implementation\CompleteTaskProcessors\FinalApprovalTaskProcessor.cs" />
+    <Compile Include="Business\Credits\Tasks\Implementation\CompleteTaskProcessors\StartApprovalTaskProcessor.cs" />
     <Compile Include="Business\Credits\Tasks\Implementation\TaskManager.cs" />
+    <Compile Include="Business\Credits\Tasks\Interfaces\ICompleteTaskProcessor.cs" />
+    <Compile Include="Business\Credits\Tasks\Interfaces\ICompleteTaskProcessorResolver.cs" />
     <Compile Include="Business\Credits\Tasks\Interfaces\ITaskManager.cs" />
     <Compile Include="Business\TaskNames.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -251,7 +258,9 @@
     <Compile Include="Models\CreditApplicationViewModel.cs" />
     <Compile Include="Models\CreditCategoryViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\OutcomeViewModel.cs" />
     <Compile Include="Models\PersonAutocompleteModel.cs" />
+    <Compile Include="Models\RejectionReasonViewModel.cs" />
     <Compile Include="Models\TaskViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -305,6 +314,10 @@
     <Content Include="Views\Application\Details.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ApplicationDetailsViewModel.cshtml" />
     <Content Include="Views\WorkQueue\TaskDetails.cshtml" />
+    <Content Include="Views\WorkQueue\Work.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\OutcomeViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\RejectionReasonViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\TaskViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

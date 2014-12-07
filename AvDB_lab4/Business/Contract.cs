@@ -28,5 +28,11 @@ namespace AvDB_lab4.Business
                 throw new ArgumentException(message);
             }
         }
+
+        public static void NotNullAndNoEmpty(Guid? id, string message)
+        {
+            NotNull(id, message);
+            NotEmptyGuid(id.Value, message);
+        }
     }
 }

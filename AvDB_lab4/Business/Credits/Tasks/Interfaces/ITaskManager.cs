@@ -10,6 +10,8 @@ namespace AvDB_lab4.Business.Credits.Tasks.Interfaces
         void CreateTasksForNewCreditApplication(CreditApplication creditApplication);
         IEnumerable<TaskViewModel> GetTaskViewModelsByRoles(IList<string> roles);
         TaskViewModel GetTaskViewModelByTaskId(Guid id);
+        ApprovalTaskViewModel GetApprovalTaskViewModelByTaskId(Guid id);
         void AssignTaskToUser(Guid taskId, string userId);
+        void CompleteApprovalTask(ApprovalTaskViewModel viewModel);
     }
 }

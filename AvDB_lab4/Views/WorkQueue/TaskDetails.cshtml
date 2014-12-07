@@ -6,59 +6,8 @@
 
 <h2>Task Details</h2>
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ClientName)
-        </dt>
+@Html.DisplayForModel()
 
-        <dd>
-            @Html.DisplayFor(model => model.ClientName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DispalyText)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DispalyText)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreditCategoryName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreditCategoryName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreateDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreateDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CompleteDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CompleteDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AssignedTo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AssignedTo)
-        </dd>
-
-    </dl>
-</div>
 <p>
     @Html.ActionLink("Back to List", "Index")
     @Html.ActionLink("Assign To Me", "AssignToMe", new { taskId = Model.Id })
