@@ -7,6 +7,7 @@ using AvDB_lab4.Entities.Clients;
 using AvDB_lab4.Models;
 using AvDB_lab4.DataAccess.Framework;
 using AvDB_lab4.Entities.Credits;
+using System.Collections.Generic;
 
 namespace AvDB_lab4.Controllers
 {
@@ -58,6 +59,11 @@ namespace AvDB_lab4.Controllers
         {
             ViewBag.ErrorMessage = TempData["ErrorMessage"] != null ? TempData["ErrorMessage"].ToString() : null;
             return View(creditApplicationManager.GetApplicationListViewModel());
+        }
+
+        public ActionResult RepaymentChart(Guid id)
+        {
+            return View(creditApplicationManager.GetRepaymentChartViewModel(id));
         }
     }
 }

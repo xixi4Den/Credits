@@ -10,5 +10,6 @@ namespace AvDB_lab4.Business.Credits.Interfaces
         void SaveNewCreditApplication(CreditApplicationViewModel viewModel);
         ApplicationDetailsViewModel GetApplicationDetailsViewModel(System.Guid id);
         List<ApplicationDetailsViewModel> GetApplicationListViewModel();
+        RepaymentChartViewModel GetRepaymentChartViewModel(System.Guid id);
     }
 }

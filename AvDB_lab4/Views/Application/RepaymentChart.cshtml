@@ -1,0 +1,35 @@
+﻿<script src="~/Scripts/Chart.js"></script>
+
+@model AvDB_lab4.Models.RepaymentChartViewModel
+
+@{
+    ViewBag.Title = "Chart View";
+}
+
+<h2>Chart View</h2>
+
+<canvas id="clientChart"></canvas>
+
+<script>
+    $(document).ready(function () {
+        var ctx = document.getElementById("clientChart").getContext("2d");
+        Chart.defaults.global.responsive = true;
+        var data = {
+            labels: @Html.Raw(Model.Keys),
+            datasets: [
+                {
+                    label: "My First dataset",
+                    fillColor: "rgba(220,220,220,0.2)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: @Model.Values,
+                }
+        ]
+    };
+    var clientChart = new Chart(ctx).Line(data, { bezierCurve: false });
+    })
+</script>
+
