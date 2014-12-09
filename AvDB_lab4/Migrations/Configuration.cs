@@ -45,9 +45,9 @@ namespace AvDB_lab4.Migrations
             //context.Set<Currency>().Add(currency);
             //context.SaveChanges();
 
-            //const string defaultRole = "AuthorizedParty";
-            //const string defaultUser = "TestUser5";
-            //const string defaultPassword = "123456qW1";
+            //const string defaultRole = "CreditCommitteeEmployee";
+            //const string defaultUser = "TestUser4";
+            //const string defaultPassword = "123456qW!";
 
             //if (!context.Roles.Any(r => r.Name == defaultRole))
             //{

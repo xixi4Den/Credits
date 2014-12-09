@@ -11,7 +11,7 @@
 
 <p>
     @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-info"})
-    @if (Model.AssignedTo == null)
+    @if (Model.Status != TaskStatus.Completed && Model.AssignedTo == null)
     {
         @Html.ActionLink("Assign To Me", "AssignToMe", new {taskId = Model.Id}, new {@class = "btn btn-primary"})
     }

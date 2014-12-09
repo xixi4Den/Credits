@@ -86,8 +86,8 @@ namespace AvDB_lab4.Business.Credits.Implementation
             {
                 if ((attachment != null) && (attachment.ContentLength > 0))
                 {
-                    var fileName = Path.GetFileName(attachment.FileName);
-                    var path = Path.Combine(HttpContext.Current.Server.MapPath("~/Files"), Guid.NewGuid() + fileName);
+                    var fileName = Guid.NewGuid() + Path.GetFileName(attachment.FileName);
+                    var path = Path.Combine(HttpContext.Current.Server.MapPath("~/Files"), fileName);
                     attachment.SaveAs(path);
                     var attachmentEntity = new Attachment
                     {

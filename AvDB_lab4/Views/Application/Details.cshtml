@@ -1,4 +1,5 @@
-﻿@model AvDB_lab4.Models.ApplicationDetailsViewModel
+﻿@using AvDB_lab4.Entities.Credits
+@model AvDB_lab4.Models.ApplicationDetailsViewModel
 
 @{
     ViewBag.Title = "Application Details";
@@ -8,7 +9,7 @@
 
 @Html.DisplayForModel(Model)
 
-@if (Model.CompleteDate != null)
+@if (Model.IsCompleted && Model.Outcome == Outcome.Accept)
 {
     <p>
         @Html.ActionLink("Repayment Chart", "RepaymentChart", "Application", new { id = Model.Id }, new { @class = "btn btn-info" })
