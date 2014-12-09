@@ -150,7 +150,7 @@ namespace AvDB_lab4.Business.Credits.Implementation
                 repaymentChartViewModel.ClientName = unitOfWork.GetRepository<JuridicalPerson>().GetById(creditApplication.ClientId).Name;
             }
 
-            CreditCategory creditCategory = unitOfWork.GetRepository<CreditCategory>().GetById(creditApplication.CreditCategoryId);
+            CreditCategory creditCategory = creditApplication.CreditCategory;
             List<string> keys = new List<string>();
             List<double> values = new List<double>();
             double percent = creditCategory.Rate;
