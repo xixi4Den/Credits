@@ -25,5 +25,6 @@ namespace AvDB_lab4.Controllers
             var result = clientManager.GetCompanyNamesStartsWith(query);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
     }
 }

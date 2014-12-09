@@ -8,6 +8,13 @@
 
 @Html.DisplayForModel(Model)
 
+@if (Model.CompleteDate != null)
+{
+    <p>
+        @Html.ActionLink("Repayment Chart", "RepaymentChart", "Application", new { id = Model.Id }, new { @class = "btn btn-info" })
+    </p>
+}
+
 <p>
     @Html.ActionLink("Back to List", "List", "Application", null, new { @class = "btn btn-info" })
 </p>

@@ -11,6 +11,7 @@ using AvDB_lab4.Entities.Clients;
 using AvDB_lab4.Entities.Credits;
 using AvDB_lab4.Models;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace AvDB_lab4.Business.Credits.Implementation
 {
@@ -135,6 +136,52 @@ namespace AvDB_lab4.Business.Credits.Implementation
             return resultList;
         }
 
+        public RepaymentChartViewModel GetRepaymentChartViewModel(Guid id)
+        {
+            RepaymentChartViewModel repaymentChartViewModel = new RepaymentChartViewModel();
+            CreditApplication creditApplication = unitOfWork.GetRepository<CreditApplication>().GetById(id);
+            if (creditApplication.Client.ClientGroup == ClientGroup.PrivatePerson)
+            {
+                LegalPerson client = unitOfWork.GetRepository<LegalPerson>().GetById(creditApplication.ClientId);
+                repaymentChartViewModel.ClientName = client.FirstName + " " + client.LastName;
+            }
+            else
+            {
+                repaymentChartViewModel.ClientName = unitOfWork.GetRepository<JuridicalPerson>().GetById(creditApplication.ClientId).Name;
+            }
+
+            CreditCategory creditCategory = unitOfWork.GetRepository<CreditCategory>().GetById(creditApplication.CreditCategoryId);
+            List<string> keys = new List<string>();
+            List<double> values = new List<double>();
+            double percent = creditCategory.Rate;
+            double money = Convert.ToDouble(creditCategory.MaxAmount);
+            int months = creditCategory.Span;
+
+            if (creditCategory.RepaymentScheme == RepaymentScheme.Annuity)
+            {
+                double monthlyPercent = percent / 100 / 12;
+                double monthlyPayment = money * monthlyPercent / (1 - Math.Pow(1 + monthlyPercent, (-1) * months));
+                for (int i = 0; i < months; i++)
+                    values.Add(monthlyPayment);                
+            }
+            else
+            {
+                DateTime date = creditApplication.CompleteDate.Value;
+                double fixedPayment = money / months;
+                double variablePayment = 0;
+                for (int i = 0; i < months; i++)
+                {
+                    variablePayment = money * percent / 100 * 31 / 365;
+                    money -= fixedPayment;
+                    values.Add(fixedPayment + variablePayment);
+                }
+            }
+            keys = GetKeys(creditApplication.CompleteDate.Value, months);
+            repaymentChartViewModel.Keys = JsonConvert.SerializeObject(keys.ToArray());
+            repaymentChartViewModel.Values = JsonConvert.SerializeObject(values.ToArray());
+            return repaymentChartViewModel;
+        }
+
         private ApplicationDetailsViewModel GetApplicationDetails(CreditApplication creditApplication)
         {
             ApplicationDetailsViewModel applicationDetailsModel = new ApplicationDetailsViewModel();
@@ -155,6 +202,17 @@ namespace AvDB_lab4.Business.Credits.Implementation
                 applicationDetailsModel.Contract = contract;
             }           
             return applicationDetailsModel;
+        }
+
+        private List<string> GetKeys(DateTime date, int months)
+        {
+            List<string> keys = new List<string>();
+            for (int i = 0; i < months; i++)
+            {
+                keys.Add(date.ToLongDateString());
+                 date = date.AddMonths(1);
+            }
+            return keys;
         }
     }
 }
