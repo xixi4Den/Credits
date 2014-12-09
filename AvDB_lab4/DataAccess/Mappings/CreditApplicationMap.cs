@@ -21,6 +21,8 @@ namespace AvDB_lab4.DataAccess.Mappings
 
             HasRequired(x => x.Client).WithMany().HasForeignKey(x => x.ClientId);
             HasRequired(x => x.CreditCategory).WithMany().HasForeignKey(x => x.CreditCategoryId).WillCascadeOnDelete(false);
+
+            HasMany(t => t.Attachments);
         }
     }
 }

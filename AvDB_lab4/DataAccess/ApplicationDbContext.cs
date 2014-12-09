@@ -25,6 +25,7 @@ namespace AvDB_lab4.DataAccess
             modelBuilder.Configurations.Add(new CreditApplicationMap());
             modelBuilder.Configurations.Add(new BaseTaskMap());
             modelBuilder.Configurations.Add(new ApprovalTaskMap());
+            modelBuilder.Configurations.Add(new AttachmentMap());
             base.OnModelCreating(modelBuilder);
         }
 

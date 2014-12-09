@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using AvDB_lab4.Entities;
 using AvDB_lab4.Entities.Credits;
 
 namespace AvDB_lab4.Models

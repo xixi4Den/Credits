@@ -67,3 +67,28 @@
         }
     </dl>
 </div>
+
+@if (Model.Attachments != null && Model.Attachments.Count != 0)
+{
+    <div id="attachments">
+        @Html.Label("Attachments", new { @class = "col-md-2" })
+
+        @foreach (var attachment in Model.Attachments)
+        {
+            if (!attachment.IsContract)
+            {
+                <embed src=@String.Concat("http://localhost:9796/Files/", attachment.Source) width="1000" height="500" class="col-md-10">
+            }
+        }
+    </div>
+}
+
+@if (Model.Contract != null)
+ {
+     <div id="contract">
+         @Html.Label("Contract", new { @class = "col-md-2" })
+         <embed src=@String.Concat("http://localhost:9796/Files/", Model.Contract.Source) width="1000" height="500" class="col-md-10">
+     </div>
+ }
+
+

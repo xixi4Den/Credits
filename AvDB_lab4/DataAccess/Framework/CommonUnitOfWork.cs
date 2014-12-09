@@ -27,6 +27,7 @@ namespace AvDB_lab4.DataAccess.Framework
             RegisterRepository(new CommonRepository<CreditApplication>(context));
             RegisterRepository(new CommonRepository<BaseTask>(context));
             RegisterRepository(new CommonRepository<ApprovalTask>(context));
+            RegisterRepository(new CommonRepository<Attachment>(context));
         }
 
         protected ApplicationDbContext Context

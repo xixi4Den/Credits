@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using AvDB_lab4.Entities;
 using AvDB_lab4.Entities.Credits;
 using System;
 
@@ -19,5 +21,9 @@ namespace AvDB_lab4.Models
         public Outcome? Outcome { get; set; }
         [Display(Name = "Rejection Reason")]
         public RejectionReason? RejectionReason { get; set; }
+
+
+        public ICollection<Attachment> Attachments { get; set; }
+        public Attachment Contract { get; set; }
     }
 }

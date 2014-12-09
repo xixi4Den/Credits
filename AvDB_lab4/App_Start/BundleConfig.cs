@@ -24,12 +24,14 @@ namespace AvDB_lab4
                       "~/Scripts/respond.js",
                       "~/Scripts/Autocomplete/bloodhound.js",
                       "~/Scripts/Autocomplete/bootstrap3-typeahead.js",
-                      "~/Scripts/css.js"));
+                      "~/Scripts/css.js",
+                      "~/Scripts/fileinput.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/MyStyles.css"));
+                      "~/Content/MyStyles.css",
+                      "~/Content/fileinput.css"));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862

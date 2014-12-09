@@ -196,6 +196,7 @@
     <Compile Include="DataAccess\Framework\IRepository.cs" />
     <Compile Include="DataAccess\Framework\IUnitOfWork.cs" />
     <Compile Include="DataAccess\Mappings\ApprovalTaskMap.cs" />
+    <Compile Include="DataAccess\Mappings\AttachmentMap.cs" />
     <Compile Include="DataAccess\Mappings\BaseClientMap.cs" />
     <Compile Include="DataAccess\Mappings\CreditApplicationMap.cs" />
     <Compile Include="DataAccess\Mappings\CreditCategoryMap.cs" />
@@ -203,6 +204,7 @@
     <Compile Include="DataAccess\Mappings\JuridicalPersonMap.cs" />
     <Compile Include="DataAccess\Mappings\LegalPersonMap.cs" />
     <Compile Include="DataAccess\Mappings\BaseTaskMap.cs" />
+    <Compile Include="Entities\Attachment.cs" />
     <Compile Include="Entities\BaseDbEntity.cs" />
     <Compile Include="Entities\Clients\BaseClient.cs" />
     <Compile Include="Entities\Clients\ClientGroup.cs" />
@@ -251,6 +253,14 @@
     <Compile Include="Migrations\201412021933313_AlertBaseTaskTable_ChangeUserIdToAllowsNull.Designer.cs">
       <DependentUpon>201412021933313_AlertBaseTaskTable_ChangeUserIdToAllowsNull.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412082220490_Add attachments.cs" />
+    <Compile Include="Migrations\201412082220490_Add attachments.Designer.cs">
+      <DependentUpon>201412082220490_Add attachments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412090026321_Attachment_Relationship_Corrections.cs" />
+    <Compile Include="Migrations\201412090026321_Attachment_Relationship_Corrections.Designer.cs">
+      <DependentUpon>201412090026321_Attachment_Relationship_Corrections.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDetailsViewModel.cs" />
@@ -270,6 +280,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\fileinput.css" />
     <Content Include="Content\MyStyles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -281,6 +292,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\css.js" />
+    <Content Include="Scripts\fileinput.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -324,6 +336,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Files\" />
     <Folder Include="Scripts\MyScripts\" />
     <Folder Include="Views\Clients\" />
   </ItemGroup>
@@ -355,6 +368,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412021933313_AlertBaseTaskTable_ChangeUserIdToAllowsNull.resx">
       <DependentUpon>201412021933313_AlertBaseTaskTable_ChangeUserIdToAllowsNull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412082220490_Add attachments.resx">
+      <DependentUpon>201412082220490_Add attachments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412090026321_Attachment_Relationship_Corrections.resx">
+      <DependentUpon>201412090026321_Attachment_Relationship_Corrections.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

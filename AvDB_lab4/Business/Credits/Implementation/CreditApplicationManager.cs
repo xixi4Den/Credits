@@ -1,8 +1,12 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
+using System.Web;
 using AvDB_lab4.Business.Credits.Interfaces;
 using AvDB_lab4.Business.Credits.Tasks.Interfaces;
 using AvDB_lab4.Business.Exceptions;
 using AvDB_lab4.DataAccess.Framework;
+using AvDB_lab4.Entities;
 using AvDB_lab4.Entities.Clients;
 using AvDB_lab4.Entities.Credits;
 using AvDB_lab4.Models;
@@ -51,7 +55,7 @@ namespace AvDB_lab4.Business.Credits.Implementation
             return result;
         }
 
-        public void SaveNewCreditApplication(CreditApplicationViewModel viewModel)
+        public void SaveNewCreditApplication(CreditApplicationViewModel viewModel, IEnumerable<HttpPostedFileBase> attachments)
         {
             Contract.NotNull(viewModel, "CreditApplicationViewModel cannot be null");
             Contract.NotNull(viewModel.ClientGroupViewModel, "ClientGroupViewModel cannot be null");
@@ -70,7 +74,30 @@ namespace AvDB_lab4.Business.Credits.Implementation
             unitOfWork.GetRepository<CreditApplication>().InsertOrUpdate(entity);
             unitOfWork.Commit();
 
+            AddAttachments(entity.Id, attachments);
+
             taskManager.CreateTasksForNewCreditApplication(entity);
+        }
+
+        private void AddAttachments(Guid creditApplicationId, IEnumerable<HttpPostedFileBase> attachments)
+        {
+            foreach (var attachment in attachments)
+            {
+                if ((attachment != null) && (attachment.ContentLength > 0))
+                {
+                    var fileName = Path.GetFileName(attachment.FileName);
+                    var path = Path.Combine(HttpContext.Current.Server.MapPath("~/Files"), Guid.NewGuid() + fileName);
+                    attachment.SaveAs(path);
+                    var attachmentEntity = new Attachment
+                    {
+                        ApplicationId = creditApplicationId,
+                        IsContract = false,
+                        Source = fileName,
+                    };
+                    unitOfWork.GetRepository<Attachment>().InsertOrUpdate(attachmentEntity);
+                }
+            }
+            unitOfWork.Commit();
         }
 
         private bool IsCreditApplicationAlreadyExistsForClient(Guid clientId)
@@ -93,7 +120,7 @@ namespace AvDB_lab4.Business.Credits.Implementation
 
         public ApplicationDetailsViewModel GetApplicationDetailsViewModel(Guid id)
         {
-            var creditApplication = unitOfWork.GetRepository<CreditApplication>().GetById(id);
+            var creditApplication = unitOfWork.GetRepository<CreditApplication>().Get(x => x.Id == id).SingleOrDefault();
             return GetApplicationDetails(creditApplication);
         }
 
@@ -120,8 +147,13 @@ namespace AvDB_lab4.Business.Credits.Implementation
             {
                 applicationDetailsModel.ClientName = unitOfWork.GetRepository<JuridicalPerson>().GetById(creditApplication.ClientId).Name;
             }
-
             AutoMapper.Mapper.Map(creditApplication, applicationDetailsModel);
+            var contract = applicationDetailsModel.Attachments.FirstOrDefault(x => x.IsContract);
+            if (contract != null)
+            {
+                applicationDetailsModel.Attachments.Remove(contract);
+                applicationDetailsModel.Contract = contract;
+            }           
             return applicationDetailsModel;
         }
     }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using AvDB_lab4.Business.Credits.Interfaces;
@@ -35,7 +37,7 @@ namespace AvDB_lab4.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ClientGroupViewModel,CreditCategoryViewModel,ClientId")] CreditApplicationViewModel viewModel)
+        public ActionResult Create([Bind(Include = "ClientGroupViewModel,CreditCategoryViewModel,ClientId")] CreditApplicationViewModel viewModel, IEnumerable<HttpPostedFileBase> attachments)
         {
             try
             {
@@ -43,7 +45,7 @@ namespace AvDB_lab4.Controllers
                 {
                     throw new BusinessException("You don't have permissions for this operation");
                 }
-                creditApplicationManager.SaveNewCreditApplication(viewModel);
+                creditApplicationManager.SaveNewCreditApplication(viewModel, attachments);
                 return RedirectToAction("List", "Application");
             }
             catch(BusinessException e)
